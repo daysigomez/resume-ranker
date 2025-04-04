@@ -31,10 +31,27 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20):
     resumes = []
     for root, _, files in os.walk(resume_dir):
         for file in files:
+            if file.startswith("._") or "__MACOSX" in root:
+                continue
             if file.endswith(".pdf"):
                 pdf_path = os.path.join(root, file)
                 text = extract_text_from_pdf(pdf_path)
                 resumes.append({"filename": file, "text": text, "path": pdf_path})
+
+    # --- Get embeddings for cosine similarity ---
+    def get_embedding(text, model="text-embedding-3-small"):
+        text = text.replace("\n", " ")
+        return openai.embeddings.create(input=[text], model=model).data[0].embedding
+
+    jd_embedding = get_embedding(job_description)
+
+    for r in tqdm(resumes, desc="Embedding resumes"):
+        try:
+            r["embedding"] = get_embedding(r["text"])
+            r["cosine_similarity"] = cosine_similarity([jd_embedding], [r["embedding"]])[0][0]
+        except Exception as e:
+            print(f"❌ Embedding failed for {r['filename']}: {e}")
+            r["cosine_similarity"] = 0
 
     # --- GPT-4 scoring ---
     def gpt4_score_resume(resume_text, jd_text):
@@ -68,11 +85,14 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20):
         content = response.choices[0].message.content.strip()
         try:
             score = float(content.split()[0])
+            explanation = content[len(content.split()[0]):].strip(" -:\n")
         except:
             score = None
-        return score, content
+            explanation = content
+        return score, explanation
 
-    for r in tqdm(resumes, desc="GPT-4 scoring"):
+    for idx, r in enumerate(tqdm(resumes, desc="GPT-4 scoring"), start=1):
+        print(f"Scoring resume {idx}/{len(resumes)}: {r['filename']}")
         score, explanation = gpt4_score_resume(r["text"], job_description)
         r["gpt4_score"] = score
         r["gpt4_explanation"] = explanation
