@@ -8,8 +8,12 @@ import pandas as pd
 from resume_ranker import rank_resumes  # This is your refactored logic as a function
 
 st.title("Resume Ranker 💼")
-st.write(
-    "Please upload a zip file of the resume PDFs you want to review. You will receive a CSV with all of the resumes ranked as well as a zip file of the top 20 resumes.n/**Note:** This ranker is optimized for the HPC Engineer, AI and Data role."
+st.markdown(
+     """
+    Please upload a zip file of the resume PDFs you want to review.  
+    You will receive a CSV with all of the resumes ranked as well as a zip file of the top 20 resumes.  
+    **Note:** This ranker is optimized for the HPC Engineer, AI and Data role.
+    """
 )
 
 # Store OpenAI API key securely from Streamlit secrets
