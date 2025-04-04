@@ -1,4 +1,6 @@
 .streamlit/secrets.toml
+ranked_resumes.csv
+resumes_to_review/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

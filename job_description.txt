@@ -1,0 +1,43 @@
+HPC Engineer, AI and Data
+
+Rescale is high performance computing built for the cloud. We empower engineers while giving IT security and control. From supersonic jets to personalized medicine, industry leaders are bringing new product innovations to market with unprecedented speed and efficiency. Rescale is a cloud platform delivering intelligent full-stack automation and performance optimization. IT leaders use Rescale to deliver HPC-as-a-Service with a secure control plane to deliver any application, on any architecture, at any scale on their cloud of choice.
+
+We are seeking a highly motivated and experienced HPC Engineer, AI and Data to join our team.
+
+At Rescale, this means you will work on and impact: 
+
+Become an expert in the Rescale platform and its application to customer workflows.
+
+Solve complex HPC AI problems for customers on our platform.
+
+Integrate cutting-edge AI technologies into CAE workflows. 
+
+Collaborate with a dynamic and agile development team.
+
+Engage directly with customers to understand their needs and provide tailored solutions.
+
+Contribute to the development and enhancement of our AI software products.
+
+Stay updated with the latest advancements in HPC and AI technologies.
+
+Participate in code reviews and provide constructive feedback to peers.
+
+What we’re looking for: 
+
+Advanced degree in Machine Learning, Computer Science, Aerospace Engineering, or a related field (preferably a PhD).
+
+5-10 years of industry experience.
+
+Strong problem-solving skills and self-motivation.
+
+Software development experience
+
+Expertise in HPC and applying AI technology to CAE workflows.
+
+Proficiency in key skills: PyTorch, Modulus, PyG, CAE/CFD/FEA, REST API development, CUDA, Kubernetes, and more.
+
+Excellent communication and teamwork skills.
+
+Ability to work independently and manage multiple tasks effectively.
+
+Passion for continuous learning and professional development.
