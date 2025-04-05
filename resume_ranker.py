@@ -58,7 +58,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None):
         prompt_parts = [
             "You are a technical recruiter scoring a candidate for the role below.\n",
             "Please assign a score from 1 to 10 based on how well the candidate meets the job requirements.\n",
-            "Also provide a concise 1-2 sentence explanation for your score.\n",
+            "Also provide a concise explanation (1–2 short sentences only) without starting with 'Explanation:' or repeating the score.\n",
             "Weight the following traits most heavily, in order of importance:\n",
             "1. Expertise in HPC and applying AI technology to CAE workflows\n",
             "2. Software development experience\n",
