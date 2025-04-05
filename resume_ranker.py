@@ -84,8 +84,14 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None):
         )
         content = response.choices[0].message.content.strip()
         try:
-            score = float(content.split()[0])
-            explanation = content[len(content.split()[0]):].strip(" -:\n")
+            import re
+            match = re.search(r"\b\d+(\.\d+)?\b", content)
+            if match:
+                score = float(match.group())
+                explanation = content[match.end():].strip(" -:")
+            else:
+                score = None
+                explanation = content
         except:
             score = None
             explanation = content
