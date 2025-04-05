@@ -105,7 +105,9 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None):
 
     # --- Final ranking ---
     for r in resumes:
-        r["final_score"] = r["gpt4_score"] if r["gpt4_score"] is not None else 0
+        r["final_score"] = (
+            0.7 * r["gpt4_score"] + 0.3 * (r["cosine_similarity"] * 10)
+        ) if r["gpt4_score"] is not None else 0
 
     ranked = sorted(resumes, key=lambda x: x["final_score"], reverse=True)
 
