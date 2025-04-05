@@ -64,7 +64,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None):
             "2. Software development experience\n",
             "3. Advanced degree in Machine Learning, Computer Science, Aerospace Engineering, or a related field (preferably a PhD)\n",
             "4. Proficiency in key skills: PyTorch, Modulus, PyG, CAE/CFD/FEA, REST API development, CUDA, Kubernetes, and more\n",
-            "5. 5-10 years of industry experience\n",
+            "5. 5-10 years of industry experience (but consider 3–4 years acceptable if the experience is mainly focused on HPC and applying AI to CAE workflows)\n",
             "6. Experience engaging directly with customers to understand their needs and providing tailored solutions\n\n",
             "Job Description:\n",
             jd_text,
