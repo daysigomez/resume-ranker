@@ -36,13 +36,15 @@ if uploaded_zip:
         job_desc_file = os.path.join(os.path.dirname(__file__), "job_description.txt")
 
         if st.button("Run Resume Ranking"):
-            # Run the resume ranking logic
-            with st.spinner("Ranking resumes, please wait..."):
-                ranked_df, review_folder = rank_resumes(
-                    resumes_folder,
-                    job_desc_file,
-                    top_n=20
-                )
+            status_placeholder = st.empty()
+            progress_placeholder = st.empty()
+
+            ranked_df, review_folder = rank_resumes(
+                resumes_folder,
+                job_desc_file,
+                top_n=20,
+                st=st
+            )
 
             # Show results
             st.success("Done! Top resumes ranked below:")
