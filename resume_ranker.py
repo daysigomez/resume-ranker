@@ -40,7 +40,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
 
     # --- Get embeddings for cosine similarity ---
     if st:
-        st.info("🔍 Extracting text and generating resume embeddings. This may take a few minutes...")
+        st.info()
 
     def get_embedding(text, model="text-embedding-3-small"):
         text = text.replace("\n", " ")
