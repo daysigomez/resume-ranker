@@ -39,7 +39,7 @@ if uploaded_zip:
             status_placeholder = st.empty()
             progress_placeholder = st.empty()
 
-            progress_bar = st.progress(0, text="Analyzing resumes with GPT-4. This may take a few minutes depending on file count and content...")
+            progress_bar = st.progress(0, text="Starting app...")
 
             ranked_df, review_folder = rank_resumes(
                 resumes_folder,

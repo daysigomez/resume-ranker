@@ -45,7 +45,9 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
         return openai.embeddings.create(input=[text], model=model).data[0].embedding
 
     jd_embedding = get_embedding(job_description)
-
+    
+    if st:
+        embed_bar = st.progress(0, text="🔍 Extracting and embedding resumes...")
     for r in tqdm(resumes, desc="Embedding resumes"):
         try:
             r["embedding"] = get_embedding(r["text"])
@@ -53,6 +55,8 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
         except Exception as e:
             print(f"❌ Embedding failed for {r['filename']}: {e}")
             r["cosine_similarity"] = 0
+        if st:
+            embed_bar.progress(idx / len(resumes), text=f"🔍 Processed {idx}/{len(resumes)} resumes...")
 
     # --- GPT-4 scoring ---
     def gpt4_score_resume(resume_text, jd_text):
@@ -109,6 +113,9 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
         score, explanation = gpt4_score_resume(r["text"], job_description)
         r["gpt4_score"] = score
         r["gpt4_explanation"] = explanation
+
+    if st:
+        embed_bar.empty()
 
     # --- Final ranking ---
     for r in resumes:
