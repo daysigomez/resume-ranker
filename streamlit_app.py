@@ -45,15 +45,21 @@ if uploaded_zip:
                 st=st,
                 progress_bar=progress_bar
             )
-            csv_path = os.path.join(tmpdir, "ranked_resumes.csv")
+            # Save outputs to persistent local files
+            output_dir = "output"
+            os.makedirs(output_dir, exist_ok=True)
+
+            csv_path = os.path.join(output_dir, "ranked_resumes.csv")
+            zip_path = os.path.join(output_dir, "resumes_to_review.zip")
+
             ranked_df.to_csv(csv_path, index=False)
+            shutil.make_archive(zip_path.replace(".zip", ""), 'zip', review_folder)
 
-            review_zip = os.path.join(tmpdir, "resumes_to_review.zip")
-            shutil.make_archive(review_zip.replace(".zip", ""), 'zip', review_folder)
-
+            # Store references
             st.session_state["ranked_df"] = ranked_df
             st.session_state["csv_path"] = csv_path
-            st.session_state["review_zip"] = review_zip
+            st.session_state["review_zip"] = zip_path
+
 
 # Show results and download buttons after ranking
 if "ranked_df" in st.session_state:
