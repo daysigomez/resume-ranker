@@ -39,8 +39,6 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
                 resumes.append({"filename": file, "text": text, "path": pdf_path})
 
     # --- Get embeddings for cosine similarity ---
-    if st:
-        st.info()
 
     def get_embedding(text, model="text-embedding-3-small"):
         text = text.replace("\n", " ")
