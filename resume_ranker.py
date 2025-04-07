@@ -58,7 +58,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
             print(f"❌ Embedding failed for {r['filename']}: {e}")
             r["cosine_similarity"] = 0
         if st and progress_bar:
-            progress_bar.progress(idx / len(resumes), text=f"🔍 Embedded {idx}/{len(resumes)} resumes...")
+            progress_bar.progress(idx / len(resumes), text=f"Embedded {idx}/{len(resumes)} resumes...")
 
     # --- GPT-4 scoring ---
     def gpt4_score_resume(resume_text, jd_text):
@@ -135,7 +135,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
 
     df.to_csv("ranked_resumes.csv", index=False)
 
-    print("✅ Ranked resumes exported to ranked_resumes.csv")
+    print("Ranked resumes exported to ranked_resumes.csv")
 
     # --- Copy top resumes to review folder ---
     os.makedirs(review_dir, exist_ok=True)
@@ -144,5 +144,5 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
         if os.path.exists(r["path"]):
             shutil.copy(r["path"], dst_path)
 
-    print(f"✅ Top {top_n} resumes copied to '{review_dir}/'")
+    print(f"Top {top_n} resumes copied to '{review_dir}/'")
     return df, review_dir

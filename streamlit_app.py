@@ -35,7 +35,7 @@ if uploaded_zip:
         # Use the pre-saved job description file
         job_desc_file = os.path.join(os.path.dirname(__file__), "job_description.txt")
 
-        if st.button("Run Resume Ranking"):
+        if st.button("Run Resume Ranking") or "ranked_df" in st.session_state:
             progress_bar = st.progress(0, text="Preparing resumes...")
 
             ranked_df, review_folder = rank_resumes(
@@ -45,19 +45,23 @@ if uploaded_zip:
                 st=st,
                 progress_bar=progress_bar
             )
-
-            # Show results
-            st.success("Done! Top resumes ranked below:")
-            st.dataframe(ranked_df)
-
-            # Download CSV
             csv_path = os.path.join(tmpdir, "ranked_resumes.csv")
             ranked_df.to_csv(csv_path, index=False)
-            with open(csv_path, "rb") as f:
-                st.download_button("Download CSV", f, file_name="ranked_resumes.csv")
 
-            # Zip the top resumes
             review_zip = os.path.join(tmpdir, "resumes_to_review.zip")
             shutil.make_archive(review_zip.replace(".zip", ""), 'zip', review_folder)
-            with open(review_zip, "rb") as f:
-                st.download_button("Download Top 20 Resumes (ZIP)", f, file_name="resumes_to_review.zip")
+
+            st.session_state["ranked_df"] = ranked_df
+            st.session_state["csv_path"] = csv_path
+            st.session_state["review_zip"] = review_zip
+
+# Show results and download buttons after ranking
+if "ranked_df" in st.session_state:
+    st.success("Done! Top resumes ranked below:")
+    st.dataframe(st.session_state["ranked_df"])
+
+    with open(st.session_state["csv_path"], "rb") as f:
+        st.download_button("Download CSV", f, file_name="ranked_resumes.csv")
+
+    with open(st.session_state["review_zip"], "rb") as f:
+        st.download_button("Download Top 20 Resumes (ZIP)", f, file_name="resumes_to_review.zip")
