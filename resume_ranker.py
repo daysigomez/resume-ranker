@@ -114,7 +114,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
         r["gpt4_score"] = score
         r["gpt4_explanation"] = explanation
 
-    if st:
+    if st and embed_bar:
         embed_bar.empty()
 
     # --- Final ranking ---
