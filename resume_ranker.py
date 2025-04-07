@@ -39,6 +39,9 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
                 resumes.append({"filename": file, "text": text, "path": pdf_path})
 
     # --- Get embeddings for cosine similarity ---
+    if st:
+        st.info("🔍 Extracting text and generating resume embeddings. This may take a minute...")
+
     def get_embedding(text, model="text-embedding-3-small"):
         text = text.replace("\n", " ")
         return openai.embeddings.create(input=[text], model=model).data[0].embedding
