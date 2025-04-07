@@ -46,17 +46,19 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
 
     jd_embedding = get_embedding(job_description)
     
-    if st:
-        embed_bar = st.progress(0, text="🔍 Extracting and embedding resumes...")
-    for r in tqdm(resumes, desc="Embedding resumes"):
+    if st and progress_bar:
+        progress_bar.progress(0, text="Extracting and embedding resumes...")
+
+    
+    for idx, r in enumerate(resumes, start=1):
         try:
             r["embedding"] = get_embedding(r["text"])
             r["cosine_similarity"] = cosine_similarity([jd_embedding], [r["embedding"]])[0][0]
         except Exception as e:
             print(f"❌ Embedding failed for {r['filename']}: {e}")
             r["cosine_similarity"] = 0
-        if st:
-            embed_bar.progress(idx / len(resumes), text=f"🔍 Processed {idx}/{len(resumes)} resumes...")
+        if st and progress_bar:
+            progress_bar.progress(idx / len(resumes), text=f"🔍 Embedded {idx}/{len(resumes)} resumes...")
 
     # --- GPT-4 scoring ---
     def gpt4_score_resume(resume_text, jd_text):
@@ -114,7 +116,7 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None
         r["gpt4_score"] = score
         r["gpt4_explanation"] = explanation
 
-    if st and embed_bar:
+    if embed_bar:
         embed_bar.empty()
 
     # --- Final ranking ---

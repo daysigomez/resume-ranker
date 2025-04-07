@@ -36,10 +36,7 @@ if uploaded_zip:
         job_desc_file = os.path.join(os.path.dirname(__file__), "job_description.txt")
 
         if st.button("Run Resume Ranking"):
-            status_placeholder = st.empty()
-            progress_placeholder = st.empty()
-
-            progress_bar = st.progress(0, text="Starting app...")
+            progress_bar = st.progress(0, text="Preparing resumes...")
 
             ranked_df, review_folder = rank_resumes(
                 resumes_folder,
