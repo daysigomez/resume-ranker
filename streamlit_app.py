@@ -39,11 +39,14 @@ if uploaded_zip:
             status_placeholder = st.empty()
             progress_placeholder = st.empty()
 
+            progress_bar = st.progress(0, text="Starting...")
+
             ranked_df, review_folder = rank_resumes(
                 resumes_folder,
                 job_desc_file,
                 top_n=20,
-                st=st
+                st=st,
+                progress_bar=progress_bar
             )
 
             # Show results

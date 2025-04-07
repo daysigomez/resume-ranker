@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import PyPDF2
 
 
-def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None):
+def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None, progress_bar=None):
     openai.api_key = os.getenv("OPENAI_API_KEY")
     review_dir = "resumes_to_review"
 
@@ -97,13 +97,13 @@ def rank_resumes(resume_dir, job_desc_path, top_n=20, st=None):
             explanation = content
         return score, explanation
 
-    if st:
-        progress_bar = st.progress(0, text="Starting resume scoring...")
+    if st and progress_bar:
+        progress_bar.progress(0, text="Starting resume scoring...")
 
     for idx, r in enumerate(resumes, start=1):
         status_msg = f"Scoring resume {idx}/{len(resumes)}: {r['filename']}"
         print(status_msg)
-        if st:
+        if st and progress_bar:
             progress_bar.progress(idx / len(resumes), text=status_msg)
         score, explanation = gpt4_score_resume(r["text"], job_description)
         r["gpt4_score"] = score
